@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import uuid from 'react-native-uuid';
-import { colors } from '../theme';
+import { colors } from '../theme'; 
 
 class AddCity extends React.Component {
   state = {
@@ -15,43 +15,39 @@ class AddCity extends React.Component {
 
   submit = () => {
     const { city, country } = this.state;
-    if (city === '' || country === '') {
-      alert('please complete form');
+    if (!city || !country) {
+      alert('Please complete the form');
       return;
     }
+
     const newCity = {
+      id: uuid.v4(),
       city,
       country,
-      id: uuid.v4(),
       locations: [],
     };
-    this.props.addCity(newCity); // ✅ State lifted up, no params anymore
-    this.setState(
-      {
-        city: '',
-        country: '',
-      },
-      () => {
-        this.props.navigation.navigate('Cities');
-      }
-    );
+
+    this.props.addCity(newCity);
+    this.setState({ city: '', country: '' }, () => {
+      this.props.navigation.navigate('Cities');
+    });
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Cities</Text>
+        <Text style={styles.heading}>Add City</Text>
         <TextInput
-          placeholder="City name"
-          onChangeText={(val) => this.onChangeText('city', val)}
+          placeholder="City"
           style={styles.input}
           value={this.state.city}
+          onChangeText={(val) => this.onChangeText('city', val)}
         />
         <TextInput
-          placeholder="Country name"
-          onChangeText={(val) => this.onChangeText('country', val)}
+          placeholder="Country"
           style={styles.input}
           value={this.state.country}
+          onChangeText={(val) => this.onChangeText('country', val)}
         />
         <TouchableOpacity onPress={this.submit}>
           <View style={styles.button}>
@@ -64,33 +60,33 @@ class AddCity extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  button: {
+  container: {
+    flex: 1,
+    backgroundColor: colors.primary, 
+    justifyContent: 'center',
+  },
+  heading: {
+    fontSize: 30,
+    color: 'white',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  input: {
+    backgroundColor: 'white',
     height: 50,
+    margin: 10,
+    paddingHorizontal: 10,
+  },
+  button: {
     backgroundColor: '#666',
+    height: 50,
+    margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
   },
   buttonText: {
     color: 'white',
     fontSize: 18,
-  },
-  heading: {
-    color: 'white',
-    fontSize: 40,
-    marginBottom: 10,
-    alignSelf: 'center',
-  },
-  container: {
-    backgroundColor: colors.primary,
-    flex: 1,
-    justifyContent: 'center',
-  },
-  input: {
-    margin: 10,
-    backgroundColor: 'white',
-    paddingHorizontal: 8,
-    height: 50,
   },
 });
 
