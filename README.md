@@ -9,12 +9,12 @@ This React Native app allows users to add and manage cities along with their cou
 Users interact with the app through the following inputs:
 
 - **Add City**
-  - City name (text)
-  - Country name (text)
+  - City name 
+  - Country name 
 
 - **Add Country**
-  - Country name (text)
-  - Currency (text)
+  - Country name 
+  - Currency 
 
 - **Navigation**
   - Users can navigate between four main tabs:
@@ -22,8 +22,6 @@ Users interact with the app through the following inputs:
     - AddCity
     - AddCountry
     - Countries
-
-All input is collected through React Native `TextInput` components and validated before submission.
 
 ## Process
 
